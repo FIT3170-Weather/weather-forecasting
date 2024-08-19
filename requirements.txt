@@ -1,5 +1,8 @@
+tensorflow
 openmeteo-requests
 requests-cache
+numpy
+seaborn
 pandas
 retry-requests
 keras
