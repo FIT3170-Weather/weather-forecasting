@@ -49,19 +49,50 @@ For development, a normal laptop is sufficient. However, it’s better if you ha
 
 
 ## How to Run & Train Models
-Discusses the structure of this repository like what is the use for datasets, models and notebooks directories. (add code snippets if have time)
+This repository contains the ```/dataset```, ```/models```, and ```/notebooks``` directories.
 
-1) Discuss Notebooks directory
-    - Talk about the notebooks inside what are their intentions
-    - how developers can create new notebooks to develop new implemtations of weather forecasting
-    - Explain how there are many locations and the notebooks are for particular locations
-    - Explain how the team is currently using LSTM neural architecture to create the prediction model
-    - Discuss about running fetch data notebook to export location hourly weather 
-    - then run the LSTM model notebook with changed location code to get the exported weather dataset to train new model for a particular location
-    - give instructions on changing the location code based on the backend to create dataset and start development
-2) Discuss datasets directory
-3) Discuss the models directory and how it will be used for integration with the FASTAPI backend.
-
+1) /notebooks
+    - Contains two .ipynb notebooks - ```Fetch_Weather_Data_For_Location.ipynb``` and ```LSTM_Weather_Forecast_Model.ipynb```.
+    - ```Fetch_Weather_Data_For_Location.ipynb```:
+      - Fetches historical (hourly) temperature, humidity, dew point, rain, pressure, wind speed, and wind direction data for a specific location.
+      - This notebook retrieves the required data to train the model, so this notebook should be run before ```LSTM_Weather_Forecast_Model.ipynb```.
+      - Refer to the ```/locations``` endpoint in the ```forecast-api``` repository for an exhaustive list of location codes.
+      - Refer to the in-line comments and print statments to learn more about what each cell does.
+      - Before running the cells, ensure that the cells tagged with ```#TODO``` are modified accordingly.
+      - ``` 
+        # TODO: Change location code
+        location_code = ```johor-bahru```
+      - ```
+        # TODO: Change to specific location's latitude and longitude
+        ```latitude```: 1.4655,
+        ```longitude```: 103.7578,
+      - Create the corresponding file under ```/datasets```, named according to the location code (e.g. ```johor-bahru```). This is where the dataset used for machine learning training is stored.
+      - Run all cells.
+      - A new ```.csv``` file that contains this historical data should be expected in this newly created file. 
+    - ```LSTM_Weather_Forecast_Model.ipynb```:
+      - This notebook contains the implementation of the LSTM neural network used to predict weather data for one particular location.
+      - This model currently predicts temperature, humidity, dew point, rain, pressure, wind speed, and wind direction based on the historical data generated from ```Fetch_Weather_Data_For_Location.ipynb```, and the LSTM model in this notebook.
+      - Refer to the in-line comments and print statments to learn more about what each cell does.
+      - Before running the cells, ensure that the cells tagged with ```#TODO``` are modified accordingly.
+      - ``` 
+        # TODO: Change location code
+        location_code = ```johor-bahru```
+      - Create the corresponding folder under /models, named according to the location code (e.g. ```johor-bahru```). This is where the model is stored.
+      - Run all cells.
+      - Note that it takes approximately 1-2 hours to train one model, depending on the device being used.
+      - A new ```model.h5``` and ```scaler.pkl``` file should be expected in this newly created file. The ```model.h5``` contains the trained model; the ```scaler.pkl``` contains the Scaler object to help denormalise values of the output layer.
+    - Note that all the steps above only train **ONE** model for **ONE** location. Repeat these steps for other desired locations.
+2) /datasets
+   - This directory contains all historical data used to train the models.
+   - Subfolders, each named according to location codes, store a ```.csv``` file that represent historical data for each location.
+   - These subfolders should be created before ```Fetch_Weather_Data_For_Location.ipynb``` is run.
+   - Ensure these subfolders are populated with the correct ```.csv``` file before running ```LSTM_Weather_Forecast_Model.ipynb```.
+3) /models
+   - This directory contains all the trained LSTM models.
+   - Subfolders, each named according to location codes, store a ```model.h5``` file that represent a trained model for each location.
+   - These subfolders should be created before ```LSTM_Weather_Forecast_Model.ipynb``` is run.
+   - The ```scaler.pkl``` will also be found here after running ```LSTM_Weather_Forecast_Model.ipynb```. This is needed to de-normalise the values in the output layer. 
+   - **IMPORTANT:** Ensure that this repository (```weather-forecasting```) resides in the same directory as the ```forecast-api``` directory (i.e. they have the same parent directory). This is beacause ```/forecast``` endpoint in ```forecast-api``` searches for the models in ```/models``` using absolute paths.
 
 ## Common Issues and Troubleshooting
 
