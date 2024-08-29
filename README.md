@@ -42,11 +42,33 @@ More detailed requirements for python dependencies are available in the requirem
 For development, a normal laptop is sufficient. However, it’s better if you have a laptop or workstation equipped with an NVIDIA graphics card to train the models more efficiently. If you plan to work with GPUs for machine learning model training, ensure that the correct GPU versions of CUDA and cuDNN are available. If you don't have a powerful laptop, connecting to a cloud GPU runtime can be helpful to run the model training and development on the cloud.
 
 ## Setup and Installation Instructions
+Complete the following steps to complete the software setup of the project.
 
-1) Clone the repo (add code snippets if have time)
-2) Make sure all the other software and hardware requirements are available on the system as mentioned earlier.
-3) Install the requirements in requirements.txt using pip
+1. Clone this repository:
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
+2. Make sure all software and hardware requirements are setup as mentioned earlier like *Jupyter Notebook*.
+    ```sh
+    pip install jupyter
+    ```
+    
+3. Install all the Python dependencies using ```requirements.txt``` 
+    ```sh
+    pip install -r requirements.txt
+    ```
+    
+4. Start a jupyter notebook server to start working with the notebooks in this project.
+    ```sh
+    jupyter notebook
+    ```
+
+## Usage
+```sh
+./wc.exe [OPTION]... [FILE]
+```
 
 ## How to Run & Train Models
 This repository contains the ```/dataset```, ```/models```, and ```/notebooks``` directories.
