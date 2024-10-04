@@ -116,6 +116,46 @@ This repository contains the ```/dataset```, ```/models```, and ```/notebooks```
    - The ```scaler.pkl``` will also be found here after running ```LSTM_Weather_Forecast_Model.ipynb```. This is needed to de-normalise the values in the output layer. 
    - **IMPORTANT:** Ensure that this repository (```weather-forecasting```) resides in the same directory as the ```forecast-api``` directory (i.e. they have the same parent directory). This is beacause ```/forecast``` endpoint in ```forecast-api``` searches for the models in ```/models``` using absolute paths.
 
+## Current Machine Learning Pipeline and Model Architecture
+1) Data for a particular city location in Malaysia is fetched from [OpenMeteo](https://open-meteo.com/) for the last 14 years until August 2024.
+2) The data is stored in a semantic folder as a CSV file.
+3) This dataset is then used in the training, but it is first preprocessed.
+4) The attributes are scaled using normalization in the preprocessing stage, this is known as feature scaling.
+5) The dataset is then split into a training set, a testing set, and a validation or evaluation set.
+6) Then we create the LSTM model. It has the following architecture:
+```python
+def create_model(input_shape):
+    model = Sequential()
+    model.add(Bidirectional(LSTM(50, return_sequences=True), input_shape=input_shape))
+    model.add(LSTM(7)) # Predicting 7 features
+    model.compile(optimizer='adam', loss='mse')
+    return model
+```
+8) The model is trained by fitting it to the training dataset.
+9) The trained model after 50 epochs is evaluated using the testing dataset and the predicted and true values or plotted for visualization.
+
+## Future Work
+
+As we continue to improve the CliMate project, there are several potential enhancements and features to consider for future iterations:
+
+1) Model Optimization and Hyperparameter Tuning:
+   - Implement various ways to explore hyperparameter tuning using libraries like Optuna or Hyperopt to enhance model performance and accuracy.
+   - Experiment with different neural network architectures and techniques, such as GRUs or Transformers, to compare performance against the current LSTM model.
+
+2) Model experimentation with certain weather attributes
+   - The current model does not capture the patterns of rain well. It can be inferred from the image below as such.
+   - The rain pattern is of steps in nature. It can either be 0 or a positive real value. Due to the nature of its values, the model is not able to accurately capture its patterns.
+   - Hence, it is useful to experiment with different neural network architectures and techniques and also experiment with ensemble methods by putting multiple models together.
+    ![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+
+3) Extended Data Sources:
+   - Incorporate additional weather data sources, which could include live sources, to improve forecasting accuracy.
+   - Expand the dataset to include more diverse geographical locations, allowing for broader model training and validation.
+
+4) Automation through CI/CD pipelines
+   - Development of multiple models and training and exporting them along with data preprocessing can be very labor intensive if done manually.
+   - In order to tackle this, it would be useful to develop and architect a CI/CD pipeline that automates all of these.
+
 ## Common Issues and Troubleshooting
 
 Developers might encounter the following common issues:
