@@ -146,7 +146,6 @@ As we continue to improve the CliMate project, there are several potential enhan
    - The current model does not capture the patterns of rain well. It can be inferred from the image below as such.
    - The rain pattern is of steps in nature. It can either be 0 or a positive real value. Due to the nature of its values, the model is not able to accurately capture its patterns.
    - Hence, it is useful to experiment with different neural network architectures and techniques and also experiment with ensemble methods by putting multiple models together.
-    ![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 3) Extended Data Sources:
    - Incorporate additional weather data sources, which could include live sources, to improve forecasting accuracy.
